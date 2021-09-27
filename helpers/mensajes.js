@@ -1,25 +1,13 @@
 require('colors')
 
 const {outConsole} = require('./consoleColor')
+const menuOpts = require('./menuOpts')
 
-const listMenu = [
-    'Crear tareas',
-    'Listar tareas',
-    'Tareas completadas',
-    'Tareas pendientes',
-    'Completar tarea(s)',
-    'Borrar Tareas'
-]
 const mostrarMenu = () => {
 
-    return new Promise( resolve => {
-        console.clear()
- 
-        outConsole({ text : "=========================", style:"red"})
-        outConsole({ text : "  Seleccione una opcion  ", style:"custom"})    
-        outConsole({ text : "=========================", style:"red"})
-
-        listMenu.forEach( (tarea, index) => {
+    return new Promise( resolve => {        
+        menuSelecion()
+        menuOpts.forEach( (tarea, index) => {
             outConsole({text : `${(++index)}. ${tarea}`})
         })
         outConsole({text : `0. Salir`})
@@ -34,6 +22,13 @@ const mostrarMenu = () => {
             resolve(opt)
         })
     })
+}
+
+const menuSelecion = () => {
+    console.clear() 
+    outConsole({ text : "=========================", style:"red"})
+    outConsole({ text : "  Seleccione una opcion  ", style:"custom"})    
+    outConsole({ text : "=========================", style:"red"})
 }
 
 const pausa = () => {
@@ -52,5 +47,6 @@ const pausa = () => {
 }
 module.exports  = {
     mostrarMenu,
-    pausa
+    pausa,
+    menuSelecion
 }
