@@ -61,7 +61,7 @@ class Tareas {
             const estado = (completed) ? 'Completada'.green : 'Pendiente'.red
             if (completadas) {
                 if (completed) {
-                    console.log(`${(contador + '.').green} ${desc} :: ${completed}`);
+                    console.log(`${(contador + '.').green} ${desc} :: ${completed.green}`);
                     contador +=1
                 }
             } else {
@@ -73,6 +73,20 @@ class Tareas {
             
         })
         console.log('\n')
+    }
+
+    toogleCompleted(ids = []){
+        ids.forEach(id => {
+            const tarea = this._listado[id]
+            if (!tarea.completed){
+                tarea.completed = new Date().toISOString()
+            }
+        });
+        this.listadoArr.forEach( tarea => {
+            if (!ids.includes(tarea.id)){
+                this._listado[tarea.id].completed = null
+            }
+        })
     }
 }
 

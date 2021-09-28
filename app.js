@@ -1,4 +1,4 @@
-const { inquirerMenu, inquirerPausa, leerInput, listadoTareasBorrar} = require('./helpers/inquirer');
+const { inquirerMenu, inquirerPausa, leerInput, listadoTareasBorrar, confirmar, checkList} = require('./helpers/inquirer');
 const { saveData, readDB } = require('./helpers/driveFile');
 const Tareas = require('./models/tareas.class');
 
@@ -30,9 +30,21 @@ const main = async () => {
             case 4:
                 tareas.listarTareas(false)
                 break;
+            case 5:
+                const ids = await checkList(tareas.listadoArr)
+                //console.log(ids);
+                tareas.toogleCompleted(ids)
+                break;
             case 6:
                 const idDelete = await listadoTareasBorrar(tareas.listadoArr)
-                console.log({idDelete});
+                
+                if (idDelete !== 0 ) {
+                    const ok = await confirmar ('¿Esta seguro?')
+                    if (ok) {
+                        tareas.deleteTarea(idDelete)
+                        console.log(`Tareas borrada ${idDelete}`);
+                    }
+                }                
                 break;
             default:
                 break;
